@@ -1,0 +1,89 @@
+#include <iostream>
+
+using namespace std;
+
+class Node
+{
+private:
+    int data;
+    Node *next;
+
+public:
+    int get_data() { return data; }
+    Node *get_next() { return next; }
+    void set_data()
+    {
+        cout << "Enter the element: ";
+        cin >> data;
+    }
+    void set_next(Node *n) { next = n; }
+};
+
+const int limit = 100;
+
+class Stack
+{
+private:
+    Node *head = NULL;
+    int current = 0;
+
+public:
+    void push()
+    {
+        Node *temp = new Node;
+        if (current < limit)
+        {
+
+            if (head == NULL)
+            {
+                temp->set_data();
+                temp->set_next(NULL);
+                head = temp;
+            }
+            else
+            {
+                temp->set_data();
+                temp->set_next(head);
+                head = temp;
+            }
+            current++;
+        }
+        else
+            cout << "Stack overflow!" << endl;
+    }
+    int pop()
+    {
+        if (head != NULL)
+        {
+            int data = head->get_data();
+            Node *new_head = head->get_next();
+            delete head;
+            head = new_head;
+            return data;
+        }
+        else
+            cout << "Stack underflow!" << endl;
+        return -1;
+    }
+};
+
+int main()
+{
+    Stack s1;
+    int choice;
+    while (true)
+    {
+        cout << "Enter 1 to push an element to the stack." << endl
+             << "2 to pop an element." << endl
+             << "3 to exit." << endl;
+        cin >> choice;
+        if (choice == 1)
+            s1.push();
+        else if (choice == 2)
+            cout << "Popped element: " << s1.pop() << endl;
+        else if (choice == 3)
+            return 0;
+        else
+            cout << "Invalid choice. Please try again!" << endl;
+    }
+}
